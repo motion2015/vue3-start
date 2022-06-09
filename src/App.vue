@@ -1,26 +1,53 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="bg"></div>
+  
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <router-link class="navbar-brand" :to="{name: 'Home'}">Kossie Coder</router-link>
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <router-link class="nav-link" :to="{name: 'Todos'}">Todos</router-link>
+      </li>
+      <li class="nav-item">
+        <router-link class="nav-link" :to="{name: 'Login'}">Login</router-link>
+      </li>
+      <li class="nav-item">
+        <router-link class="nav-link" :to="{name: 'SassTest'}">SassTest</router-link>
+      </li>
+    </ul>
+  </nav>
+<div class="container">
+  <router-view /> 
+  <Toast 
+    v-if="showToast"
+    :message="toastMessage"
+    :type="toastAlertType"
+    />
+</div>
+
+  
 </template>
-
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import Toast from '@/components/Toast'
+import { useToast } from '@/composables/toast'
 export default {
-  name: 'App',
   components: {
-    HelloWorld
+    Toast
+  },
+  setup() {
+     const { 
+      showToast, 
+      toastMessage, 
+      toastAlertType, 
+      triggerToast, 
+    } = useToast()
+
+    console.log("app>>>>",showToast.value);
+    return {
+      showToast, 
+      toastMessage, 
+      toastAlertType,
+      triggerToast
+    }
   }
 }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
